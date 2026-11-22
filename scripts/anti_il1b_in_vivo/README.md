@@ -1,6 +1,6 @@
 # In-vivo anti-IL-1β workflow
 
-These scripts cover the supplied anti-IL-1β bulk-RNA and H3K27ac follow-up analyses. They are intentionally retained as plain R scripts because the input RDS objects and intermediate tables are not included in this repository.
+These scripts cover the supplied anti-IL-1β bulk-RNA and H3K27ac follow-up analyses. 
 
 ## Configuration
 
@@ -19,6 +19,4 @@ Set these variables in `config/.env` before running the workflow:
 5. `plot_pooled_ap1_directional_excluding_mac_subsets_hspc.R` calculates the dynamic-versus-stable AP-1 H3K27ac table. `make_final_antiil1b_manuscript_panels.R` reads that table and other declared final tables to assemble the supplied manuscript-panel set.
 6. `test_ap1_dynamic_vs_stable_gene_responsiveness.R` is retained as a supporting AP-1 gene-response analysis; it is not required to draw the confirmed supplementary promoter plot.
 
-## Missing upstream producers
 
-The supplied sources do not create the anti-IL-1β edgeR RDS object; the tested H3K27ac peak table; the combined age/exercise/anti-IL-1β GSEA table; the TOBIAS AP-1 membership table; or the adjusted RNA/H3K27ac AP-1-effects table read by the manuscript-panel assembler. These are input requirements, not inferred or replaced workflows.
