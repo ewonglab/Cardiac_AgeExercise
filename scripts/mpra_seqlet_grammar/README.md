@@ -1,10 +1,10 @@
 # AlphaGenome MPRA sequence-context workflow
 
-This directory is the publication copy of the supplied AlphaGenome MPRA seqlet-grammar bundle. It contains 21 Python source files and two small input fixtures only. The original bundle remains unchanged in `RealCode/MPRA_seqlet_grammar_code_bundle/`; its source checksums are retained in `provenance/mpra_seqlet_grammar_source_SHA256SUMS.txt`.
+This directory is the publication copy of the supplied AlphaGenome MPRA seqlet-grammar bundle. It contains 21 Python source files and two small input fixtures only. The original supplier bundle is not redistributed in this repository.
 
 ## Required configuration and inputs
 
-Copy `config/.env.example` to `config/.env`, populate the variables below, and export it from the `publication_code` directory before running a script.
+Copy `config/.env.example` to `config/.env`, populate the variables below, and export it from the repository root before running a script.
 
 | Variable | Required contents |
 | --- | --- |
@@ -20,7 +20,7 @@ The original AlphaGenome MPRA model-training notebook is retained externally as 
 
 ## Run order
 
-Run from the `publication_code` directory after exporting configuration:
+Run from the repository root after exporting configuration:
 
 ```bash
 set -a; source config/.env; set +a

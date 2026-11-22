@@ -1,0 +1,12 @@
+numpy
+pandas
+scipy
+scikit-learn
+matplotlib
+torch
+biopython
+pyjaspar
+alphagenome-pytorch
+
+# The original activity/ISM scripts additionally require the local
+# alphagenome_encoder_ft project wheel supplied with the MPRA model bundle.

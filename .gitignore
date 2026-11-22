@@ -1,0 +1,30 @@
+# Local configuration and secrets
+config/.env
+
+# Input and generated research data
+data/
+results/
+outputs/
+# Anchored to the repository root: scripts/mpra_seqlet_grammar/figures/ holds tracked source code.
+/figures/
+*.rds
+*.RDS
+*.RData
+*.h5
+*.h5ad
+*.h5seurat
+*.bam
+*.bai
+*.fastq
+*.fastq.gz
+*.fq.gz
+
+# Python and R session artefacts
+__pycache__/
+*.py[cod]
+.Rhistory
+.RData
+.Rproj.user/
+
+# Operating-system files
+.DS_Store
