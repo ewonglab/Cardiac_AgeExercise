@@ -321,7 +321,7 @@ for (cond in unique(RNA$age_condition)){
 
     cellchat@DB <- CellChatDB.use
     cellchat <- subsetData(cellchat)
-    future::plan("multiprocess", workers = 7) # do parallel
+    future::plan(if (future::supportsMulticore()) "multicore" else "multisession", workers = 7) # do parallel ("multiprocess" is defunct in current 'future')
     cellchat <- identifyOverExpressedGenes(cellchat)
     cellchat <- identifyOverExpressedInteractions(cellchat)
     cellchat <- computeCommunProb(cellchat)
@@ -363,7 +363,7 @@ df.net <- subsetCommunication(cellchat, slot.name = "net",
                                   thresh = thresh)
 
 df.net$Aged_Ex$Cond = "Aged_Ex"
-df.net$Aged_Sed$Cond = "Aged_Ex"
+df.net$Aged_Sed$Cond = "Aged_Sed"  # Fixed: was mislabelled "Aged_Ex", so the exported table had two sets of rows called Aged_Ex
 df.net$Young_Ex$Cond = "Young_Ex"
 df.net$Young_Sed$Cond = "Young_Sed"
 df_all = rbind(df.net$Aged_Ex,df.net$Aged_Sed,df.net$Young_Ex,df.net$Young_Sed)
@@ -558,6 +558,7 @@ Young_Sed_Go = aggregateNet2(
 print("YS DONE")
 
 
+library(dplyr)  # Added: the summarise() pipelines below run before the later library(dplyr) call
 df_interactions <- subsetCommunication(Aged_Ex_Go)
 
 # 2. Count the number of interactions per condition
@@ -2241,9 +2242,9 @@ DT::datatable(net_age, filter = 'top')
 
 # Specify comparison = c(1, 2, 3, 4) to pull from all four objects in the list
 
-gg3
+# (a bare "gg3" call stood here; removed because gg3 is only assigned a few lines below)
 # Specify comparison = c(1, 2, 3, 4) to pull from all four objects in the list
-gg3 <- netVisual_bubble(Aged_Sed, 
+gg3 <- netVisual_bubble(Aged_Sed,
                         sources.use = "Cardiomyocyte", 
                         targets.use = "Fibroblast",
                         signaling = c("TGFb"),

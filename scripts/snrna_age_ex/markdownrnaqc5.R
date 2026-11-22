@@ -104,7 +104,9 @@ for (i in 1:length(Runs)){
   
   #doublet_Noempty =NormalizeData(doublet_Noempty)
   setwd(publication_path("HEART_SNRNA_ROOT", "data/2023-03-01.CellbenderFiltered_MAS3_2_Adjust"))
-  #saveRDS(doublet_Noempty, file = paste0(Run,"Normalized_hashed_doublet_empty_nonemptyCells.rds"))
+  # Re-enabled: these per-run objects are read back a few lines below (readRDS(... "Normalized_hashed_doublet_empty_nonemptyCells.rds")),
+  # but nothing in the repository wrote them while this line was commented out.
+  saveRDS(doublet_Noempty, file = paste0(Run,"Normalized_hashed_doublet_empty_nonemptyCells.rds"))
   
   print(paste(Run,"Filtered_Hashed_nonDoublet_nonEmpty cells"))
   print(doublet_Noempty)

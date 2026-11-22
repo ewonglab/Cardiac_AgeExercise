@@ -13,6 +13,7 @@ source(file.path("config", "paths.R"))
 suppressPackageStartupMessages({
   library(DESeq2)
   library(data.table)
+  library(dplyr)  # Added: case_when() is used before the later library(dplyr) call
 })
 
 # Parse command line arguments

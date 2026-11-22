@@ -1107,8 +1107,16 @@ def main() -> None:
     figure_1()
     figure_2()
     figure_3()
-    figure_4()
-    print("Created Figures 1–4 as PNG and PDF.")
+    # Figure 4 needs AlphaFold 3 outputs and a helper script that are not distributed with this repository
+    # (see README). Skip it, with a message, instead of crashing after Figures 1-3 have been written.
+    af3_metrics = OUT / "alphafold3_spacing_results/analysis/alphafold3_combined_job_metrics.csv"
+    af3_helper = ROOT / "work/analyze_af3_geometry.py"
+    if af3_metrics.exists() and af3_helper.exists():
+        figure_4()
+        print("Created Figures 1–4 as PNG and PDF.")
+    else:
+        print("Created Figures 1–3 as PNG and PDF. Skipped Figure 4: AlphaFold 3 inputs not found "
+              f"({af3_metrics} and/or {af3_helper}).")
 
 
 if __name__ == "__main__":

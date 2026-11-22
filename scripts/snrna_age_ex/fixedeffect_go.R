@@ -1142,6 +1142,17 @@ colnames(PlotDiffEx) =c('Cell','Description','NES','Comparison')
 
 
 
+# Moved up from below: these axis orders are needed by the two plots that follow (they were defined after use).
+cellLevel = c('AllMacrophage','B_cell','Cardiomyocyte','Coronary_EC','Endocardial_EC','Fibroblast','Pericytes','T_cell','Lymphatic_EC')
+DesLevel = c('positive regulation of stem cell proliferation',
+             'RNA splicing',
+             'proton transmembrane transporter activity',
+             'circadian rhythm',
+             'heart growth',
+             'contractile fiber',
+             'cardiac cell development',
+             'positive regulation of lymphocyte mediated immunity','chaperone-mediated protein folding')
+
 PlotDiffLong = rbind(PlotDiffAge,PlotDiffEx)
 PlotDiffLong = PlotDiffLong[order(PlotDiffLong$NES),]
 PlotDiffLong$Description = factor(PlotDiffLong$Description, levels = unique(PlotDiffLong$Description))
@@ -1160,14 +1171,6 @@ ggplot(PlotDiffLong, aes_string(x='NES', y="Cell", color='Comparison')) +
 ggsave("IntersetingBoth_Cell.pdf", width = 10)
 
 unique(PlotDiffLong$Description)
-cellLevel = c('AllMacrophage','B_cell','Cardiomyocyte','Coronary_EC','Endocardial_EC','Fibroblast','Pericytes','T_cell','Lymphatic_EC')
-DesLevel = c('positive regulation of stem cell proliferation',
-             'RNA splicing',
-             'proton transmembrane transporter activity',
-             'circadian rhythm',
-             'heart growth',
-             'contractile fiber',
-             'cardiac cell development',
-             'positive regulation of lymphocyte mediated immunity','chaperone-mediated protein folding')
+# (cellLevel and DesLevel are now defined above, before the two plots that use them.)
 
 PlotDiffLong

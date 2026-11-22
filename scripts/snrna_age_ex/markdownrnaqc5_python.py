@@ -51,8 +51,10 @@ Runs = ["MAE2_1","MAE4_3","MAS1_4","MAS3_2","YE2_1","YE4_3","YS1_4","YS3_2"]
 for Run in Runs:
     #read in 
     print("run ="+Run)
-    out_dir = publication_path("HEART_SNRNA_ROOT", "data/2022-07-04.Scrublet")
-    input_dir = publication_path("HEART_SNRNA_ROOT", "data/CellRanger/")
+    # publication_path() returns str(Path(...)), which drops the trailing slash; the paths below are built by
+    # string concatenation (out_dir + Run + ..., input_dir + folder_dir), so the separator is added explicitly.
+    out_dir = publication_path("HEART_SNRNA_ROOT", "data/2022-07-04.Scrublet") + "/"
+    input_dir = publication_path("HEART_SNRNA_ROOT", "data/CellRanger") + "/"
     folder_dir = Run +'/outs/filtered_feature_bc_matrix/'
     counts_matrix = scipy.io.mmread(input_dir + folder_dir + 'matrix.mtx.gz').T.tocsc()
     counts_matrix = counts_matrix[:,:-9]

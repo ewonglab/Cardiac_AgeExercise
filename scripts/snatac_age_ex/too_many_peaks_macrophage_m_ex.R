@@ -352,13 +352,12 @@ Macrophages = readRDS("Macrophages_Toomany.rds")
 round(ncol(Macrophages)/10)
 i = 1
 
-table(downsampled.obj$too_many_node)
-
 setwd(publication_path("HEART_SNRNA_ROOT", "analysis/2023-03-15.Macro/too-many-cells/Bootstrap/"))
 fold = paste0("/replicate_",i)
 dir.create(file.path(getwd(), fold))
 setwd(file.path(getwd(), fold))
 downsampled.obj <- Macrophages[, sample(colnames(Macrophages), size = round(ncol(Macrophages)), replace=T)]
+table(downsampled.obj$too_many_node)  # Moved here: this line previously ran before downsampled.obj was created
 write.csv(slot(downsampled.obj@assays[["RNA"]],'data'),paste0("replicate_",i,"_data.csv"),quote = F)
 
 

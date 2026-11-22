@@ -50,11 +50,16 @@ Macrophage = readRDS("M1M2_peaks.rds")
 
 
 
-setwd(publication_path("HEART_SNRNA_ROOT", "analysis/2026-01-19.TOBIAS_RefinedPeaks"))
-
-list.files(pattern = ".bed")
-
-fib = read.table('Fibroblast_consensus.bed')
+# Exploratory check of the fibroblast consensus peaks. Fibroblast_consensus.bed is written by the
+# consensus-peak export further down ("5. Final Aggregation and Export"), so it does not exist on a
+# first run. The check is therefore only performed when the file is already present.
+refined_peaks_dir <- publication_path("HEART_SNRNA_ROOT", "analysis/2026-01-19.TOBIAS_RefinedPeaks")
+fib <- NULL
+if (file.exists(file.path(refined_peaks_dir, "Fibroblast_consensus.bed"))) {
+  setwd(refined_peaks_dir)
+  list.files(pattern = ".bed")
+  fib = read.table('Fibroblast_consensus.bed')
+}
 
 base_dir <- publication_path("HEART_SNRNA_ROOT", "analysis/2026-01-19.TOBIAS_Output/")
 bindetect_dir <- file.path(base_dir, 'BINDetect')
@@ -83,12 +88,12 @@ Fos_bind$start = as.character(Fos_bind$TFBS_start)
 
 DT::datatable(Fos_bind, filter = 'top')
 
-fib$start = as.character(fib$V2)
-76693404	
+if (!is.null(fib)) fib$start = as.character(fib$V2)
+76693404
 76693615
 76693736
 
-DT::datatable(fib, filter = 'top')
+if (!is.null(fib)) DT::datatable(fib, filter = 'top')
 
 76693404
 
@@ -2802,7 +2807,11 @@ if (length(fos_file) > 0) {
   }
 }
 
-Tobias_df <- Tobias_df %>% dplyr::rename(cell = cell_type, peak_coord_Age = peak_identifier)
+# Guarded: the identical rename is already applied earlier in this script (right after the TOBIAS
+# tables are bound), and repeating it fails because cell_type / peak_identifier no longer exist.
+if ("cell_type" %in% colnames(Tobias_df)) {
+  Tobias_df <- Tobias_df %>% dplyr::rename(cell = cell_type, peak_coord_Age = peak_identifier)
+}
 
 # ==============================================================================
 # 1. Setup and Libraries
@@ -4387,7 +4396,7 @@ for (ct in names(plots)) print(plots[[ct]])
 
 
 getwd()
-tobias_dir <- file.path(base_dir, "2026-01-19.TOBIAS_Classification")
+tobias_dir <- file.path(base_dir, "analysis/2026-01-19.TOBIAS_Classification")  # base_dir is HEART_SNRNA_ROOT here (set above), so "analysis/" is required
 setwd(tobias_dir)
 out_pdf <- "TOBIAS_FOS_alluvial_by_celltype.pdf"
 

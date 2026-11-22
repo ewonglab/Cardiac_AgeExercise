@@ -36,7 +36,7 @@ saveRDS(annotations,"annotations.rds")
 
 setwd(publication_path("HEART_SNRNA_ROOT", "data/2022-11-08.ATACObject"))
 annotations = readRDS("annotations.rds")
-plan("multiprocess", workers = 32)
+plan(if (future::supportsMulticore()) "multicore" else "multisession", workers = 32)  # "multiprocess" is defunct in current 'future'
 options(future.globals.maxSize = 100000 * 1024^2)
 
 
@@ -507,7 +507,7 @@ saveRDS(peaks, file=publication_path("HEART_SNRNA_ROOT", "data/2023-02-03.MACS/c
 
 setwd(publication_path("HEART_SNRNA_ROOT", "data/2022-11-08.ATACObject"))
 annotations = readRDS("annotations.rds")
-plan("multiprocess", workers = 32)
+plan(if (future::supportsMulticore()) "multicore" else "multisession", workers = 32)  # "multiprocess" is defunct in current 'future'
 options(future.globals.maxSize = 100000 * 1024^2)
 
 dir = publication_path("SCATAC_CELLRANGER_ROOT")
@@ -1457,9 +1457,12 @@ combined[["cellType"]]  <- ifelse(unlist(combined[["seurat_clusters"]]) %in% smo
 combined[["cellType"]]  <- ifelse(unlist(combined[["seurat_clusters"]]) %in% Cardiac_Neuronal, "Cardiac_Neuronal",unlist(combined[["cellType"]]))
 
 
-combined[["cellType"]]  <- ifelse(unlist(combined[["seurat_clusters"]]) %in% unknown_hepaocyte, "unknown_hepaocyte",unlist(combined[["cellType"]]))
-combined[["cellType"]]  <- ifelse(unlist(combined[["seurat_clusters"]]) %in% unknown1, "unknown1",unlist(combined[["cellType"]]))
-combined[["cellType"]]  <- ifelse(unlist(combined[["seurat_clusters"]]) %in% unknown2, "unknown2",unlist(combined[["cellType"]]))
+# Fixed: the two unlabelled clusters are defined above as unknown_ATAC_1 (19) and unknown_ATAC_2 (20); the
+# previous lines referred to unknown_hepaocyte / unknown1 / unknown2, which were never defined in this script.
+# Labels follow the "ATAC_unknownN" convention used downstream (e.g. "ATAC_unknown3" for cluster 21 in
+# atacdoublet_filter.R, and "ATAC_unknown1" in the DE / bulk scripts).
+combined[["cellType"]]  <- ifelse(unlist(combined[["seurat_clusters"]]) %in% unknown_ATAC_1, "ATAC_unknown1",unlist(combined[["cellType"]]))
+combined[["cellType"]]  <- ifelse(unlist(combined[["seurat_clusters"]]) %in% unknown_ATAC_2, "ATAC_unknown2",unlist(combined[["cellType"]]))
 
 #assign metadata
 combined[["dataset"]][combined[["dataset"]] == "MAS3_2_v2"] = "MAS3_2"

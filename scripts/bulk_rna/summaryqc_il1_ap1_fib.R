@@ -2237,7 +2237,7 @@ p_motif <- ggplot(plot_data, aes(x = Motif_Label, y = logFC, fill = Motif_Label)
 ggsave("AP1_Motif_Distribution_Plot_All_Contrasts_Stats.png", p_motif, width = 14, height = 7, dpi = 300)
 print(p_motif)
 
-head(All_TOBIAS_BINDING)
+# head(All_TOBIAS_BINDING)  # Removed: All_TOBIAS_BINDING is first created in "PART 2" below, so this call failed when the script was run top to bottom.
 
 # Load required libraries
 library(tidyverse)
@@ -3346,7 +3346,7 @@ linked_gene_tbl <- map_dfr(seq_len(nrow(bed_pairs)), function(i) {
   )
 }) %>%
   filter(!is.na(gene), gene != "") %>%
-  ddplyr::istinct()
+  dplyr::distinct()
 
 readr::write_csv(
   linked_gene_tbl,
@@ -10421,6 +10421,7 @@ suppressPackageStartupMessages({
 base <- publication_path("PAPER_OUTPUT_ROOT", "IL1_RNASeq/")
 dge_dir <- file.path(base)
 out_dir <- file.path(base, "enrichment")
+dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)  # Added: fwrite() below needs this folder to exist
 
 load_dge <- function(c, logfc_thr=0.585, p_thr=0.05) {
   d <- fread(file.path(dge_dir, sprintf("DGE_%s.csv", c)))

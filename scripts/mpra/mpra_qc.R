@@ -12,6 +12,7 @@ MPRA_fullShuffle = read.csv(publication_path("MPRA_ROOT", "results/counts/MPRA_C
 MPRA_motifShuffle  = read.csv(publication_path("MPRA_ROOT", "results/counts/MPRA_Comparative_Results_MotifShuffle.csv"))
 
 library(ggplot2)
+library(scales)  # Added: comma / label_percent are used before the later library(scales) call
 # Calculate MPRA activity scores (RNA/DNA ratios)
 # Usage: Rscript calculate_activity.R <count_matrix.tsv> <samples.csv> <output_dir>
 theme_mpra <- theme_bw(base_size = 9) +

@@ -115,7 +115,9 @@ great_results_M1M2_2 <- great(    ranges.show_Enrich,    background  = ranges.sh
 great_results_M1M2_3 <- great(    ranges.show_Enrich,    background  = ranges.show_BG,  tss_source =   "mm10", gene_sets = c("GO:CC") # Use mouse genome
 )
 
-tb2 = rbind(getEnrichmentTable(great_results),getEnrichmentTable(great_results2),getEnrichmentTable(great_results3))
+# Fixed: the "Down" table must use the M1/M2 GREAT results computed just above (great_results_M1M2_1/2/3);
+# it previously re-used the MacFib "Up" results (great_results/2/3), so tb2 was an exact copy of tb.
+tb2 = rbind(getEnrichmentTable(great_results_M1M2_1),getEnrichmentTable(great_results_M1M2_2),getEnrichmentTable(great_results_M1M2_3))
 
 getwd()
 

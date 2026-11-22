@@ -22,7 +22,7 @@ saveRDS(annotations,"annotations.rds")
 
 setwd(publication_path("HEART_SNRNA_ROOT", "data/2022-11-08.ATACObject"))
 annotations = readRDS("annotations.rds")
-plan("multiprocess", workers = 32)
+plan(if (future::supportsMulticore()) "multicore" else "multisession", workers = 32)  # "multiprocess" is defunct in current 'future'
 options(future.globals.maxSize = 100000 * 1024^2)
 
 dir = publication_path("SCATAC_CELLRANGER_ROOT")

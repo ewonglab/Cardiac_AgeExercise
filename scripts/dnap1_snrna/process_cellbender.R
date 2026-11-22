@@ -12,6 +12,8 @@ source(file.path("config", "paths.R"))
 
 library(Seurat)
 library(tidyverse)
+library(hdf5r)   # Added: H5File is used by read_cellbender_10x_h5() below
+library(Matrix)  # Added: sparseMatrix() is used by read_cellbender_10x_h5() below
 
 base_dir <- publication_path("DNAP1_SNRNA_ROOT", "data/CellBender_OCM")
 pools <- c("Pool_MS", "Pool_SW", "Pool_VW")
@@ -1223,7 +1225,9 @@ if (length(missing_clusters) > 0) {
 }
 
 # Add to metadata
-master_seurat <- AddMetaData(
+# Fixed: assign back to master_seurat_scrublet. The result was previously assigned to master_seurat, but
+# the checks below and every later step use master_seurat_scrublet, which therefore lacked this column.
+master_seurat_scrublet <- AddMetaData(
   object = master_seurat_scrublet,
   metadata = celltype_refined,
   col.name = "celltype_refined"
@@ -1339,7 +1343,7 @@ if (length(missing_from_metadata) > 0) {
 # Check for metadata samples not present in Seurat object
 missing_from_seurat <- setdiff(
   sample_metadata$Sample_number,
-  sort(unique(master_seurat$Sample_number))
+  sort(unique(master_seurat_scrublet$Sample_number))
 )
 
 if (length(missing_from_seurat) > 0) {
@@ -1369,10 +1373,12 @@ cols_to_add <- c(
   "Process_time"
 )
 
-# master_seurat_scrublet <- AddMetaData(
-#   object = master_seurat_scrublet,
-#   metadata = meta_new[, cols_to_add, drop = FALSE]
-# )
+# Re-enabled: without this step the Group / Sex / Mouse_ID / ... columns never exist, and the checks
+# below (and the Group / Sex based analyses downstream) fail.
+master_seurat_scrublet <- AddMetaData(
+  object = master_seurat_scrublet,
+  metadata = meta_new[, cols_to_add, drop = FALSE]
+)
 colnames(master_seurat_scrublet@meta.data)
 # Check result
 table(master_seurat_scrublet$Sample_number, master_seurat_scrublet$Orig_Pool)
