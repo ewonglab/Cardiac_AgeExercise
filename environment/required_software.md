@@ -1,6 +1,6 @@
 # Reported software requirements
 
-The manuscript reports the following analysis environment. This is a requirements record, not a lockfile; a fully executable environment cannot be constructed from the supplied sources alone because several external tools, models, and input datasets are not included.
+The manuscript reports the following analysis environment.
 
 | Component | Reported version or setting |
 | --- | --- |
@@ -24,4 +24,4 @@ The manuscript reports the following analysis environment. This is a requirement
 | Python | 3.12 (echocardiography analysis reported) |
 | AlphaGenome MPRA workflow | `numpy`, `pandas`, `scipy`, `scikit-learn`, `matplotlib`, `torch`, `biopython`, `pyjaspar` and `alphagenome-pytorch`; see `requirements_mpra_seqlet_grammar.txt` |
 
-Additional R packages used by the selectively included plotting and module scripts include `BSgenome.Mmusculus.UCSC.mm10`, `GenomicRanges`, `VennDiagram`, `patchwork` and `scales`. Required command-line tools include nf-core/cutandrun, SEACR, HOMER, FIMO, and the TooManyCells Singularity image. The AlphaGenome MPRA implementation is included in `scripts/mpra_seqlet_grammar/`, but a runnable release still requires the locally supplied `alphagenome_encoder_ft` wheel, frozen encoder checkpoint, fold-specific MPRA heads, embeddings, motif panel and input data.
+Additional R packages used by the plotting and module scripts include `BSgenome.Mmusculus.UCSC.mm10`, `GenomicRanges`, `VennDiagram`, `patchwork` and `scales`. Required command-line tools include nf-core/cutandrun, SEACR, HOMER, FIMO, and the TooManyCells Singularity image. The AlphaGenome MPRA workflow in `scripts/mpra_seqlet_grammar/` also requires the `alphagenome_encoder_ft` wheel, frozen encoder checkpoint, fold-specific MPRA heads, embeddings, motif panel and input data.
