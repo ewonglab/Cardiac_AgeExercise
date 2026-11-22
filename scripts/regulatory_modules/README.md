@@ -6,4 +6,3 @@ Configure and export `SIGNALCRE_ROOT`, `PEAK2PATHWAY_ROOT` and `PAPER_OUTPUT_ROO
 - `tre_vs_cre_footprinting.R` compares TRE (FOS/JUN) and CRE (CREB/ATF) footprint trajectories using `Tobias_df_Classified_Full.rds` staged below `PEAK2PATHWAY_ROOT`.
 - `pathway_linking_figures.R` links AP-1 sites to ECM and IL-1 gene modules using the same TOBIAS object and `mm10_refGene_tss.rds`.
 
-The NMF module-construction workflow and animal-level GC-redistribution inference are not present in the supplied sources; the first script begins from module assignments generated upstream.
