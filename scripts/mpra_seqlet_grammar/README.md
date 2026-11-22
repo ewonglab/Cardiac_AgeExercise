@@ -48,18 +48,4 @@ python scripts/mpra_seqlet_grammar/figures/make_manuscript_evidence_figures.py
 
 `spacing_epistasis_scan.py` imports the `spacing_grammar_sweep.py` helper from its own directory.
 
-## Data-free checks
 
-The included fixtures allow two checks without the model or raw data:
-
-```bash
-python scripts/mpra_seqlet_grammar/audit_followup_panel.py
-python scripts/mpra_seqlet_grammar/figures/plot_top_interacting_seqlet_pairs.py \
-  --output-prefix "$MPRA_SEQLET_TASK_ROOT/outputs/Fig_top_interacting_seqlet_pairs"
-```
-
-The first reproduces the 144 panel entries and 142 unique coordinates. The second regenerates the top-pair plot from the included pair table.
-
-## Analysis terminology
-
-The 142 unique coordinates are the *mechanistic follow-up panel*, not 142 high-confidence loci: the 144 entries comprise 96 mechanism-reliable entries, 24 deliberate model-failure controls and 24 AP-1-responsive controls, with two overlapping coordinates. Attribution and single-seqlet perturbation use all 142 coordinates; epistasis and rescue use the 91 mechanism-reliable loci with complete high- and low-attribution seqlet sets.
